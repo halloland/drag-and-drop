@@ -125,7 +125,10 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
       this.elementRef.nativeElement.removeChild(this.draggedElement);
       this.draggedElement = null;
     }
-    this.dragItem.isDragItem = false;
+    if(this.dragItem) {
+      this.dragItem.isDragItem = false;
+    }
+
     this.draggableElements.forEach((el) => el.destroyPlayer())
 
     this.dragActive = false;
