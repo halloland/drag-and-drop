@@ -88,17 +88,8 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     }
 
     this.dragItem = this.getDragItemFromEvent(event);
-    this.dragItem.isDragItem = true;
     if (this.dragItem) {
-      this.initDraggedElement();
-      //this.animatePress();
-      this.dragActive = true;
-
-      this.elementRef.nativeElement.appendChild(this.draggedElement);
-      this.draggedElement.style.boxShadow = '0px 0px 12px 5px rgba(0, 0, 0, 0.4)';
-      // TODO remove calculateCurrentPosition from here!
-
-      this.calculateInitialPosition(this.dragItem.elementRef.nativeElement);
+      this.dragItem.isDragItem = true;
     }
   }
 
@@ -110,6 +101,16 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
           if (underDragged && !underDragged.animating) {
             this.moveBoxes(underDragged);
           }
+      } else if(this.dragItem && event.movementX !== 0 && event.movementY !== 0 ) {
+        this.initDraggedElement();
+        //this.animatePress();
+        this.dragActive = true;
+
+        this.elementRef.nativeElement.appendChild(this.draggedElement);
+        this.draggedElement.style.boxShadow = '0px 0px 12px 5px rgba(0, 0, 0, 0.4)';
+        // TODO remove calculateCurrentPosition from here!
+
+        this.calculateInitialPosition(this.dragItem.elementRef.nativeElement);
       }
 
     }
