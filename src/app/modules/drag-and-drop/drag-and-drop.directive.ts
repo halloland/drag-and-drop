@@ -2,7 +2,7 @@ import {
   AfterContentInit,
   ContentChildren,
   Directive,
-  ElementRef,
+  ElementRef, HostBinding,
   Input,
   OnChanges,
   QueryList,
@@ -50,6 +50,9 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
       }
     }
   }
+
+  @HostBinding('class.drag-active')
+  dragActiveClass = false;
 
   ngAfterContentInit(): void {
     this.draggableElements = Array.from(this.draggableElementsQueryList);
@@ -109,9 +112,9 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
           }
       } else if(this.dragItem && event.movementX !== 0 && event.movementY !== 0 ) {
         this.initDraggedElement();
-        //this.animatePress();
+        this.dragItem.elementRef.nativeElement.style.pointerEvents = "none";
         this.dragActive = true;
-
+        this.dragActiveClass = true;
         this.elementRef.nativeElement.appendChild(this.draggedElement);
         this.draggedElement.style.boxShadow = '0px 0px 12px 5px rgba(0, 0, 0, 0.4)';
         // TODO remove calculateCurrentPosition from here!
@@ -136,6 +139,8 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     this.draggableElements.forEach((el) => el.destroyPlayer())
 
     this.dragActive = false;
+    this.dragActiveClass = false;
+    this.dragItem.elementRef.nativeElement.style.pointerEvents = '';
     this.dragItem = null;
   }
 

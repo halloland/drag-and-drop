@@ -32,8 +32,6 @@ export class DragItemDirective implements AfterViewInit {
     const clientRect = this.elementRef.nativeElement.getBoundingClientRect();
     this.currentX = this.initialX = clientRect.x;
     this.currentY = this.initialY = clientRect.y;
-    //this.elementRef.nativeElement.addEventListener()
-   // this.moveToBox(100, 100);
   }
 
   @HostListener('click')
@@ -48,7 +46,7 @@ export class DragItemDirective implements AfterViewInit {
     this.backupX = x;
     this.backupY = y;
 
-    const animationMetadata = animate(200 + "ms", styles);
+    const animationMetadata = animate(1000 + "ms", styles);
 
     const animationFactory = this.animationBuilder.build(animationMetadata);
     this.player = animationFactory.create(this.elementRef.nativeElement);
@@ -59,8 +57,8 @@ export class DragItemDirective implements AfterViewInit {
         this.currentX = this.backupX;
         this.currentY = this.backupY;
       }
-      console.log('aniumation end')
-    })
+    });
+
     this.player.onDestroy(() => {
       const clientRect = this.elementRef.nativeElement.getBoundingClientRect();
       this.currentX = clientRect.x;
@@ -71,6 +69,7 @@ export class DragItemDirective implements AfterViewInit {
   }
 
   destroyPlayer(): void {
+    this.player?.finish();
     this.player?.reset();
     this.transform = 'none!important';
   }

@@ -21,3 +21,6 @@
   cursor: pointer;
   user-select: none;
 }
+.drag-active > .drag-item {
+  pointer-events: none;
+}

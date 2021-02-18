@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {DragAndDropModule} from "./modules/drag-and-drop/drag-and-drop.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import {DragAndDropModule} from "./modules/drag-and-drop/drag-and-drop.module";
   ],
     imports: [
         BrowserModule,
-        DragAndDropModule
+        DragAndDropModule,
+        BrowserAnimationsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

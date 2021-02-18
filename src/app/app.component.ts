@@ -9,6 +9,6 @@ export class AppComponent {
   title = 'drag-and-drop';
 
   onClick() {
-    console.log('click')
+    console.log('1 click')
   }
 }
