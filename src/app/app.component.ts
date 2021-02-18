@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'drag-and-drop';
+
+  onClick() {
+    console.log('click')
+  }
 }

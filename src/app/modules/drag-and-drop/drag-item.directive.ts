@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, ElementRef, HostBinding, Input} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, HostBinding, HostListener, Input} from "@angular/core";
 import {animate, AnimationBuilder, AnimationPlayer, keyframes, style} from "@angular/animations";
 import {Subscription, timer} from "rxjs";
 
@@ -32,8 +32,13 @@ export class DragItemDirective implements AfterViewInit {
     const clientRect = this.elementRef.nativeElement.getBoundingClientRect();
     this.currentX = this.initialX = clientRect.x;
     this.currentY = this.initialY = clientRect.y;
-
+    //this.elementRef.nativeElement.addEventListener()
    // this.moveToBox(100, 100);
+  }
+
+  @HostListener('click')
+  onClick() {
+    console.log('host click')
   }
 
   moveToBox(x: number, y: number): void {

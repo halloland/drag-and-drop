@@ -53,6 +53,10 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.draggableElements = Array.from(this.draggableElementsQueryList);
+    document.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
   }
 
   private initAnimationFactory(): void {
