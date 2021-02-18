@@ -180,7 +180,7 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     this.animationPlayer.play();
 
     this.animationPlayer.onDone(() => {
-      this.animationPlayer.destroy()
+      this.animationPlayer.destroy();
     });
   }
 
