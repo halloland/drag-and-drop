@@ -190,7 +190,7 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     this.animationPlayer.play();
 
     this.animationPlayer.onDone(() => {
-      this.animationPlayer.destroy()
+      this.animationPlayer.destroy();
     });
   }
 
@@ -207,12 +207,18 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
   }
 
   private initDraggedElement(): void {
-    this.draggedElement = this.dragItem.elementRef.nativeElement.cloneNode(true) as HTMLElement;
+    const dragElement: HTMLElement = this.dragItem.elementRef.nativeElement;
+    const dragItemRects: DOMRect = dragElement.getBoundingClientRect();
+
+    this.draggedElement = dragElement.cloneNode(true) as HTMLElement;
     this.draggedElement.style.position = 'fixed';
     this.draggedElement.style.top = '0';
     this.draggedElement.style.left = '0';
     this.draggedElement.style.pointerEvents = 'none';
     this.draggedElement.classList.add('dragged-element');
+
+    this.draggedElement.style.height = `${dragItemRects.height}px`;
+    this.draggedElement.style.width = `${dragItemRects.width}px`;
   }
 
   private getDragItemFromEvent(event: MouseEvent | TouchEvent): DragItemDirective {
