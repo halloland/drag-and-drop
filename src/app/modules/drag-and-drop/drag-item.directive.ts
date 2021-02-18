@@ -55,4 +55,8 @@ export class DragItemDirective implements AfterViewInit {
 
     this.player.play();
   }
+
+  destroyPlayer(): void {
+    this.player?.destroy();
+  }
 }

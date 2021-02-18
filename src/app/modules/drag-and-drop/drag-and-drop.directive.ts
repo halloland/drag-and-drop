@@ -124,6 +124,8 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
       this.draggedElement = null;
     }
 
+    this.draggableElements.forEach((el) => el.destroyPlayer())
+
     this.dragActive = false;
     this.dragItem = null;
   }
@@ -138,7 +140,6 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     const targetIndex = this.draggableElements.findIndex((el) => el === targetItem);
     let sortDragIndex = dragIndex;
     let sortTargetIndex = targetIndex;
-    console.log(dragIndex, targetIndex);
     if(dragIndex < targetIndex) {
       draggableElementsArray = [...this.draggableElements].reverse();
       sortTargetIndex = this.draggableElements.length - targetIndex - 1;
