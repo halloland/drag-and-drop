@@ -1,9 +1,12 @@
-import {AfterViewInit, Directive, ElementRef, Input} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, HostBinding, Input} from "@angular/core";
 import {animate, AnimationBuilder, AnimationPlayer, keyframes, style} from "@angular/animations";
 import {Subscription, timer} from "rxjs";
 
 @Directive({
-  selector: '[drag-item]'
+  selector: '[drag-item]',
+  host: {
+    //'style': animating ? 'transform: none!important'
+  }
 })
 export class DragItemDirective implements AfterViewInit {
   animating = false;
@@ -22,6 +25,9 @@ export class DragItemDirective implements AfterViewInit {
   }
   @Input() dragDisabled: boolean = false;
 
+  @HostBinding('style.transform')
+  transform:string = null;
+
   ngAfterViewInit(): void {
     const clientRect = this.elementRef.nativeElement.getBoundingClientRect();
     this.currentX = this.initialX = clientRect.x;
@@ -31,6 +37,7 @@ export class DragItemDirective implements AfterViewInit {
   }
 
   moveToBox(x: number, y: number): void {
+    this.transform = null;
     this.animating = true;
     const styles = style({ transform: `translate(${x - this.initialX}px, ${y - this.initialY}px)`});
     this.backupX = x;
@@ -50,13 +57,16 @@ export class DragItemDirective implements AfterViewInit {
       console.log('aniumation end')
     })
     this.player.onDestroy(() => {
-      console.log('destroyed');
+      const clientRect = this.elementRef.nativeElement.getBoundingClientRect();
+      this.currentX = clientRect.x;
+      this.currentY = clientRect.y;
     })
 
     this.player.play();
   }
 
   destroyPlayer(): void {
-    this.player?.destroy();
+    this.player?.reset();
+    this.transform = 'none!important';
   }
 }

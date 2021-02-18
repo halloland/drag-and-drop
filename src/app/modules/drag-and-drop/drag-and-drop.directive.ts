@@ -14,6 +14,7 @@ import {DragAndDropOptions} from "./drag-and-drop.interface";
 import {DEFAULT_OPTIONS} from "./default.options";
 import {animate, AnimationBuilder, AnimationFactory, AnimationPlayer, keyframes, style} from "@angular/animations";
 import {DragItemDirective} from "./drag-item.directive";
+import * as _ from "lodash";
 
 @Directive({
   selector: '[drag-and-drop]'
@@ -86,7 +87,8 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
     if (this.dragActive) {
       return;
     }
-
+    this.draggableElements = Array.from(this.draggableElementsQueryList);
+    this.draggableElements.forEach((el) => el.ngAfterViewInit());
     this.dragItem = this.getDragItemFromEvent(event);
     if (this.dragItem) {
       this.dragItem.isDragItem = true;
@@ -123,7 +125,7 @@ export class DragAndDropDirective implements OnChanges, AfterContentInit {
       this.elementRef.nativeElement.removeChild(this.draggedElement);
       this.draggedElement = null;
     }
-
+    this.dragItem.isDragItem = false;
     this.draggableElements.forEach((el) => el.destroyPlayer())
 
     this.dragActive = false;
