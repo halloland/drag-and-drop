@@ -1,0 +1,23 @@
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.box{
+  display: flex;
+  width: 150px;
+  height: 150px;
+  margin: 1rem;
+  background: blue;
+  color: white;
+  font-size: 3rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
